@@ -1,0 +1,9 @@
+# Python / FastAPI
+venv/
+.venv/
+__pycache__/
+*.pyc
+.env
+
+# YOLO outputs
+runs/
