@@ -4,6 +4,8 @@
 [![Backend Repository](https://img.shields.io/badge/Backend_Repo-CameraDefectDetection__backend-109989?style=for-the-badge&logo=fastapi)](https://github.com/hossam-ibrahim27/CameraDefectDetection)
 [![Frontend Repository](https://img.shields.io/badge/Frontend_Repo-CameraDefectDetection__frontend-black?style=for-the-badge&logo=github)](https://github.com/hossam-ibrahim27/CameraDefectDetection_frontend)
 
+[![Swagger UI](https://img.shields.io/badge/API_Docs-Swagger_UI-85ea2d?style=for-the-badge&logo=swagger)](https://cameradefectdetectionbackend-production.up.railway.app/docs)
+
 ---
 
 ## 📌 Project Overview
