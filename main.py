@@ -139,6 +139,8 @@ def shutdown_event():
 
 # *****************************************************************************************************
 ## WebSocket Endpoint (Primary Stream Solution for Remote Deployments)
+
+## WebSocket Endpoint (Primary Stream Solution)
 @app.websocket("/ws/live")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
@@ -147,15 +149,43 @@ async def websocket_endpoint(websocket: WebSocket):
         while True:
             data = await websocket.receive_text()
             
-            if not data or "," not in data:
-                continue
-
-            ## open Hashing
-            image_data = base64.b64decode(data.split(",")[1])
-            image = PIL.Image.open(io.BytesIO(image_data))
+            # --- التعديل هنا لجعل الكود أكثر أماناً ---
+            try:
+                # إذا كانت البيانات تحتوي على فاصلة، نأخذ الجزء الثاني
+                if "," in data:
+                    raw_base64 = data.split(",")[1]
+                else:
+                    # إذا كانت البيانات هي الـ Base64 مباشرة
+                    raw_base64 = data
+                
+                image_data = base64.b64decode(raw_base64)
+                image = PIL.Image.open(io.BytesIO(image_data))
+            except Exception as decode_error:
+                print(f"Decoding Error: {decode_error}")
+                continue # تخطي الإطار التالف والانتظار للإطار التالي
+            # ------------------------------------------
 
             ## Inference
             results = model(image, conf=0.5, verbose=False)
+            # ... باقي الكود كما هو ...
+
+# @app.websocket("/ws/live")
+# async def websocket_endpoint(websocket: WebSocket):
+#     await websocket.accept()
+#     print("⚡ Client connected via WebSocket")
+#     try:
+#         while True:
+#             data = await websocket.receive_text()
+            
+#             if not data or "," not in data:
+#                 continue
+
+#             ## open Hashing
+#             image_data = base64.b64decode(data.split(",")[1])
+#             image = PIL.Image.open(io.BytesIO(image_data))
+
+#             ## Inference
+#             results = model(image, conf=0.5, verbose=False)
 
             detections = []
             for r in results:
